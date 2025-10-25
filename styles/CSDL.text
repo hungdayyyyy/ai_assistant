@@ -1,0 +1,99 @@
+PART I: COMPLEXITY ANALYSIS
+Function: common_item(LIST_A, LIST_B)
+
+1. Variables:
+
+N: number of elements in LIST_A
+
+M: number of elements in LIST_B
+
+2. Time Complexity:
+
+Outer loop runs N times
+
+Inner loop runs M times
+
+Each comparison is O(1)
+
+→ Total operations = N × M
+→ Time complexity: O(N × M)
+
+3. Example:
+If N = 100 and M = 1,000,000,
+then comparisons = 100 × 1,000,000 = 100,000,000 times.
+
+PART II: APPLICATION
+Exercise 1: Optimizing Product Search
+
+1. Why linear search (O(N)) is slow:
+Because when there are millions of products, it checks each one in order.
+The bigger the list, the slower it gets → bad performance and user experience.
+
+2. Better solution:
+
+Data Structure: Hash Table, Trie, or Inverted Index
+
+Search Algorithm: Indexed Search or Prefix Search
+
+3. Comparison:
+
+Method	Time Complexity	Benefit
+Linear Search	O(N)	Slow for large N
+Binary Search	O(log N)	Much faster
+Hash Lookup	O(1) (average)	Almost instant search
+Exercise 2: Friend Suggestion Feature
+
+Inefficient way (O(N²)):
+
+FUNCTION common_friends_INEFFICIENT(LIST_A, LIST_B):
+  COMMON_LIST = []
+  FOR friend_A IN LIST_A:
+    FOR friend_B IN LIST_B:
+      IF friend_A == friend_B:
+        COMMON_LIST.add(friend_A)
+  RETURN COMMON_LIST
+
+
+Efficient way (O(N + M)) using Hash Set:
+
+FUNCTION efficient_common_friends_HASH(LIST_A, LIST_B):
+  HASH_SET = new HashSet()
+  COMMON_LIST = []
+  
+  FOR friend_A IN LIST_A:
+    HASH_SET.add(friend_A)
+    
+  FOR friend_B IN LIST_B:
+    IF HASH_SET.contains(friend_B):
+      COMMON_LIST.add(friend_B)
+      
+  RETURN COMMON_LIST
+
+
+Analysis:
+
+Time: O(N + M) (because hash insert and lookup = O(1) on average)
+
+Space: O(N)
+→ Much faster than O(N × M).
+
+PART III: API PERFORMANCE ANALYSIS
+Exercise 3: Comment Sorting Performance
+
+1. Problem:
+The API uses Bubble Sort, which is O(N²) — very slow for thousands of comments.
+
+2. Better algorithms:
+Use sorting algorithms like:
+
+Merge Sort → O(N log N)
+
+Quick Sort → O(N log N) (average case, fast in practice)
+
+3. Other improvements:
+
+Pagination: only load 20–50 comments per request instead of all.
+
+Database Indexing: let the database handle sorting (e.g., ORDER BY date with an index).
+
+Caching: store sorted comments temporarily so repeated requests are instant.

@@ -72,8 +72,8 @@ function findFirstAndLastOccurrence(sortedArr, key) {
 }
 
 // --- INPUT & OUTPUT MẪU ---
-const sortedArr_p2 = [5, 7, 7, 8, 8, 8, 10, 10];
-const key_found_p2 = 8;
+const sortedArr_p2 = [1, 2, 3, 3, 3, 4, 4, 5];
+const key_found_p2 = 5;
 const key_not_found_p2 = 6;
 const result_found_p2 = findFirstAndLastOccurrence(sortedArr_p2, key_found_p2);
 const result_not_found_p2 = findFirstAndLastOccurrence(
@@ -87,52 +87,47 @@ console.log(`======================================================`);
 console.log(`Input Mảng: [${sortedArr_p2.join(", ")}]`);
 console.log(`------------------------------------------------------`);
 console.log(
-  `Key 8: Output [First Index, Last Index]: [${result_found_p2.join(", ")}]`
-); // Output: [3, 5]
+  `Key 5: Output [First Index, Last Index]: [${result_found_p2.join(", ")}]`
+);
 console.log(
   `Key 6: Output [First Index, Last Index]: [${result_not_found_p2.join(", ")}]`
-); // Output: [-1, -1]
+);
 console.log(`======================================================`);
 
-function searchInsertPosition(sortedArr, key) {
+//Problem 3
+function findInsertIndex(arr, key) {
   let low = 0;
-  let high = sortedArr.length - 1;
-  let insertionIndex = sortedArr.length; // Chỉ mục chèn mặc định là cuối mảng
+  let high = arr.length - 1;
 
   while (low <= high) {
-    let mid = Math.floor(low + (high - low) / 2);
+    const mid = low + Math.floor((high - low) / 2);
 
-    if (sortedArr[mid] === key) {
-      return mid; // Khóa đã được tìm thấy
-    } else if (sortedArr[mid] > key) {
-      insertionIndex = mid; // Lưu chỉ mục tiềm năng (vị trí chèn)
-      high = mid - 1; // Thử tìm vị trí chèn nhỏ hơn (sát về bên trái)
+    if (arr[mid] === key) {
+      return mid;
+    } else if (arr[mid] < key) {
+      low = mid + 1;
     } else {
-      low = mid + 1; // Khóa lớn hơn, tìm kiếm ở bên phải
+      high = mid - 1;
     }
   }
-  return insertionIndex; // Trả về chỉ mục chèn
+  return low;
 }
 
-// --- INPUT & OUTPUT MẪU ---
-const sortedArr_p3 = [1, 2, 3, 4, 5];
-const key_p3_found = 3;
-const key_p3_not_found = 2;
-const key_p3_end = 7;
+// --- Ví dụ 1: Key có mặt ---
+console.log("--- Ví dụ 1: Key có mặt ---");
+const arr1 = [1, 2, 3, 4, 5];
+const key1 = 3;
+console.log(`Input: Array: [${arr1}], Key: ${key1}`);
+const result1 = findInsertIndex(arr1, key1);
+console.log(`\nKết quả cuối cùng: ${result1}\n`);
 
-const res_found_p3 = searchInsertPosition(sortedArr_p3, key_p3_found);
-const res_not_found_p3 = searchInsertPosition(sortedArr_p3, key_p3_not_found);
-const res_end_p3 = searchInsertPosition(sortedArr_p3, key_p3_end);
-
-console.log(`\n======================================================`);
-console.log(`|      PROBLEM 3: SEARCH INSERT POSITION (SORTED)      |`);
-console.log(`======================================================`);
-console.log(`Input Mảng: [${sortedArr_p3.join(", ")}]`);
-console.log(`------------------------------------------------------`);
-console.log(`Key 5 (Found): Index ${res_found_p3}`); // Output: 2
-console.log(`Key 2 (Insert): Index ${res_not_found_p3}`); // Output: 1 (Chèn giữa 1 và 3)
-console.log(`Key 7 (Insert End): Index ${res_end_p3}`); // Output: 4 (Chèn sau 6)
-console.log(`======================================================`);
+// --- Ví dụ 2: Key không có mặt ---
+console.log("--- Ví dụ 2: Key không có mặt ---");
+const arr2 = [1, 2, 3, 5];
+const key2 = 4;
+console.log(`Input: Array: [${arr2}], Key: ${key2}`);
+const result2 = findInsertIndex(arr2, key2);
+console.log(`\nKết quả cuối cùng: ${result2}\n`);
 
 // Problem 4:
 function calculateEmployeeRating(workload) {
@@ -140,15 +135,12 @@ function calculateEmployeeRating(workload) {
   let currentConsecutiveDays = 0;
 
   for (let i = 0; i < workload.length; i++) {
-    // Kiểm tra điều kiện: làm việc > 6 giờ
     if (workload[i] > 6) {
       currentConsecutiveDays++;
     } else {
-      // Chuỗi ngày liên tiếp bị ngắt (<= 6 giờ)
       currentConsecutiveDays = 0;
     }
 
-    // Cập nhật số ngày liên tiếp tối đa
     if (currentConsecutiveDays > maxConsecutiveDays) {
       maxConsecutiveDays = currentConsecutiveDays;
     }
@@ -166,7 +158,3 @@ console.log(`======================================================`);
 console.log(`Input Workload (giờ/ngày): [${workload_p4.join(", ")}]`);
 console.log(`------------------------------------------------------`);
 console.log(`Output (Rating): ${rating_p4}`);
-console.log(
-  `Giải thích: Chuỗi liên tiếp dài nhất > 6 giờ là [8, 12, 11, 12, 10] => 5 ngày.`
-);
-console.log(`======================================================`);

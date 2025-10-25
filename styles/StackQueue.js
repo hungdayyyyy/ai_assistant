@@ -56,9 +56,9 @@ console.log("Stack hiện tại có rỗng không?", stack.isEmpty());
 
 class Queue {
   constructor() {
-    this.items = {}; // Dùng Object (Map) hoặc mảng với index là số nguyên để tránh re-indexing
-    this.headIndex = 0; // Con trỏ đến phần tử đầu tiên (front)
-    this.tailIndex = 0; // Con trỏ đến vị trí tiếp theo để thêm vào (end)
+    this.items = {};
+    this.headIndex = 0;
+    this.tailIndex = 0;
   }
 
   size() {
